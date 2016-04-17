@@ -1,0 +1,9 @@
+[submodule "IORAMHelper"]
+	path = IORAMHelper
+	url = git@github.com:Janworks/IORAMHelper.git
+[submodule "DRSLibrary"]
+	path = DRSLibrary
+	url = git@github.com:Janworks/DRSLibrary.git
+[submodule "SLPLibrary"]
+	path = SLPLibrary
+	url = git@github.com:Janworks/SLPLibrary.git
