@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>X2AddOnShipTool</RootNamespace>
     <AssemblyName>X2AddOnShipTool</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,7 +33,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>addon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OpenTK">
+      <HintPath>deps\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.GLControl">
+      <HintPath>deps\OpenTK.GLControl.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,7 +51,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -54,6 +63,13 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sail.cs" />
+    <Compile Include="SailPlacementControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SailPlacementControl.Designer.cs">
+      <DependentUpon>SailPlacementControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="ShipFile.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -66,7 +82,11 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SailPlacementControl.resx">
+      <DependentUpon>SailPlacementControl.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -82,6 +102,26 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="addon.ico" />
+    <None Include="Resources\50500.pal" />
+    <None Include="Resources\RenderFontConsolas.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BitmapLibrary\BitmapLibrary\BitmapLibrary.csproj">
+      <Project>{328b4638-6a65-4a99-aae4-768d98091a40}</Project>
+      <Name>BitmapLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DRSLibrary\DRSLibrary\DRSLibrary.csproj">
+      <Project>{4c0ec97d-e156-4aef-9bbb-2dcdacc34512}</Project>
+      <Name>DRSLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IORAMHelper\IORAMHelper\IORAMHelper.csproj">
+      <Project>{e916caa5-59a9-4f62-a8fb-0ceec2d840b8}</Project>
+      <Name>IORAMHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SLPLibrary\SLPLibrary\SLPLibrary.csproj">
+      <Project>{a964b92b-bab2-42b0-ab1f-9af65597707f}</Project>
+      <Name>SLPLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
