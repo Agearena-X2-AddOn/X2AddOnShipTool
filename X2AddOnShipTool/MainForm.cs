@@ -327,13 +327,13 @@ namespace X2AddOnShipTool
 
 			// Segel
 			_sailRenderData.Add(Sail.SailType.Small1, CreateTextureFromSlp(_ship.Sails[Sail.SailType.Small1].SailSlps[_currentCiv]));
-			_sailRenderData.Add(Sail.SailType.Small2, CreateTextureFromSlp(_ship.Sails[Sail.SailType.Small2].SailSlps[_currentCiv]));
-			_sailRenderData.Add(Sail.SailType.Mid1, CreateTextureFromSlp(_ship.Sails[Sail.SailType.Mid1].SailSlps[_currentCiv]));
 			_sailRenderData.Add(Sail.SailType.Mid2, CreateTextureFromSlp(_ship.Sails[Sail.SailType.Mid2].SailSlps[_currentCiv]));
 			_sailRenderData.Add(Sail.SailType.Large1, CreateTextureFromSlp(_ship.Sails[Sail.SailType.Large1].SailSlps[_currentCiv]));
-			_sailRenderData.Add(Sail.SailType.Large2, CreateTextureFromSlp(_ship.Sails[Sail.SailType.Large2].SailSlps[_currentCiv]));
 			_sailRenderData.Add(Sail.SailType.MainGo, CreateTextureFromSlp(_ship.Sails[Sail.SailType.MainGo].SailSlps[_currentCiv]));
 			_sailRenderData.Add(Sail.SailType.MainStop, CreateTextureFromSlp(_ship.Sails[Sail.SailType.MainStop].SailSlps[_currentCiv]));
+			_sailRenderData.Add(Sail.SailType.Large2, CreateTextureFromSlp(_ship.Sails[Sail.SailType.Large2].SailSlps[_currentCiv]));
+			_sailRenderData.Add(Sail.SailType.Mid1, CreateTextureFromSlp(_ship.Sails[Sail.SailType.Mid1].SailSlps[_currentCiv]));
+			_sailRenderData.Add(Sail.SailType.Small2, CreateTextureFromSlp(_ship.Sails[Sail.SailType.Small2].SailSlps[_currentCiv]));
 		}
 
 		/// <summary>
@@ -724,7 +724,12 @@ namespace X2AddOnShipTool
 		{
 			// Schiff speichern
 			if(_saveShipDialog.ShowDialog() == DialogResult.OK)
+			{
+				// Schönen Cursor anzeigen derweils
+				Cursor.Current = Cursors.WaitCursor;
 				_ship.Save(_saveShipDialog.FileName);
+				Cursor.Current = Cursors.Default;
+			}
 		}
 
 		private void _exportButton_Click(object sender, EventArgs e)
