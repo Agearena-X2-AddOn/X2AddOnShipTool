@@ -734,7 +734,17 @@ namespace X2AddOnShipTool
 
 		private void _exportButton_Click(object sender, EventArgs e)
 		{
-			// TODO
+			// Ordner auswählen lassen
+			if(_openExportFolderDialog.ShowDialog() == DialogResult.OK)
+			{
+				// Exportieren mit schönem Cursor
+				Cursor.Current = Cursors.WaitCursor;
+				_ship.Export(_openExportFolderDialog.SelectedPath);
+				Cursor.Current = Cursors.Default;
+
+				// Erfolgsnachricht
+				MessageBox.Show("Exportieren nach \"" + _openExportFolderDialog.SelectedPath + "\" erfolgreich!", "Exportieren", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
 		}
 
 		private void _nameTextBox_TextChanged(object sender, EventArgs e)
@@ -932,6 +942,49 @@ namespace X2AddOnShipTool
 
 			// Neuzeichnen
 			_drawPanel.Invalidate();
+		}
+
+		private void _drawPanel_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+		{
+			// Pfeiltasten erlauben
+			switch(e.KeyCode)
+			{
+				case Keys.Left:
+				case Keys.Right:
+				case Keys.Up:
+				case Keys.Down:
+				case Keys.Shift | Keys.Left:
+				case Keys.Shift | Keys.Right:
+				case Keys.Shift | Keys.Up:
+				case Keys.Shift | Keys.Down:
+					e.IsInputKey = true;
+					break;
+			}
+		}
+
+		private void _drawPanel_KeyDown(object sender, KeyEventArgs e)
+		{
+			// Es sollte ein Schiff geladen sein
+			if(_ship == null)
+				return;
+
+			// Frames scrollen
+			if(e.KeyCode == Keys.Up)
+			{
+				// Umschalttaste => Achse drehen
+				if(e.Shift && _rotationField.Value < _rotationField.Maximum)
+					++_rotationField.Value;
+				else if(_mainSailFrameField.Value < _mainSailFrameField.Maximum)
+					++_mainSailFrameField.Value;
+			}
+			else if(e.KeyCode == Keys.Down)
+			{
+				// Umschalttaste => Achse drehen
+				if(e.Shift && _rotationField.Value > _rotationField.Minimum)
+					--_rotationField.Value;
+				else if(_mainSailFrameField.Value > _mainSailFrameField.Minimum)
+					--_mainSailFrameField.Value;
+			}
 		}
 
 		#endregion

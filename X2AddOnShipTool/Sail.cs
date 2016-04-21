@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using SLPLoader;
 using IORAMHelper;
+using System.Collections.ObjectModel;
 
 namespace X2AddOnShipTool
 {
@@ -110,6 +111,22 @@ namespace X2AddOnShipTool
 			Mid2 = 7,
 			Small2 = 8
 		}
+
+		/// <summary>
+		/// Die Namen der einzelnen Segeltypen.
+		/// </summary>
+
+		public static readonly ReadOnlyDictionary<SailType, string> SailTypeNames = new ReadOnlyDictionary<SailType, string>(new Dictionary<SailType, string>()
+		{
+			[SailType.Small1] = "Segel hinten 1",
+			[SailType.Small2] = "Segel hinten 2",
+			[SailType.Mid1] = "Segel vorn 1",
+			[SailType.Mid2] = "Segel vorn 2",
+			[SailType.Large1] = "Segel mitte 1",
+			[SailType.Large2] = "Segel mitte 2",
+			[SailType.MainGo] = "Segel haupt Wind",
+			[SailType.MainStop] = "Segel haupt"
+		});
 
 		#endregion
 

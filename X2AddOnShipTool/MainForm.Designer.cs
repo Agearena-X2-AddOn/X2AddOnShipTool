@@ -67,6 +67,7 @@
 			this._largeSailField = new X2AddOnShipTool.SailPlacementControl();
 			this._midSailField = new X2AddOnShipTool.SailPlacementControl();
 			this._smallSailField = new X2AddOnShipTool.SailPlacementControl();
+			this._openExportFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this._mainPanel.SuspendLayout();
 			this._shipGroupBox.SuspendLayout();
 			this._menuGroupBox.SuspendLayout();
@@ -89,9 +90,11 @@
 			this._drawPanel.TabIndex = 0;
 			this._drawPanel.VSync = false;
 			this._drawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this._drawPanel_Paint);
+			this._drawPanel.KeyDown += new System.Windows.Forms.KeyEventHandler(this._drawPanel_KeyDown);
 			this._drawPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this._drawPanel_MouseDown);
 			this._drawPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this._drawPanel_MouseMove);
 			this._drawPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this._drawPanel_MouseUp);
+			this._drawPanel.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this._drawPanel_PreviewKeyDown);
 			this._drawPanel.Resize += new System.EventHandler(this._drawPanel_Resize);
 			// 
 			// _mainPanel
@@ -519,6 +522,10 @@
 			this._smallSailField.TabIndex = 0;
 			this._smallSailField.Changed += new System.EventHandler(this._smallSailField_Changed);
 			// 
+			// _openExportFolderDialog
+			// 
+			this._openExportFolderDialog.Description = "Export-Ordner auswählen...";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -529,6 +536,7 @@
 			this.Controls.Add(this._bottomPanel);
 			this.Controls.Add(this._mainPanel);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.KeyPreview = true;
 			this.Name = "MainForm";
 			this.Text = "X2-AddOn :: Schiffe verankern";
 			this.Load += new System.EventHandler(this.MainForm_Load);
@@ -589,6 +597,7 @@
 		private System.Windows.Forms.RadioButton _mainSailModeGoButton;
 		private System.Windows.Forms.RadioButton _mainSailModeStopButton;
 		private System.Windows.Forms.Label _mainSailModeLabel;
+		private System.Windows.Forms.FolderBrowserDialog _openExportFolderDialog;
 	}
 }
 

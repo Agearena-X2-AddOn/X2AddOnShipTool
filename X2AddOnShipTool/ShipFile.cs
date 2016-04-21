@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using IORAMHelper;
 using SLPLoader;
+using System.IO;
+using System.Collections.ObjectModel;
 
 namespace X2AddOnShipTool
 {
@@ -128,6 +130,39 @@ namespace X2AddOnShipTool
 			buffer.Save(filename);
 		}
 
+		/// <summary>
+		/// Export die enthaltenen SLPs in den gegebenen Ordner.
+		/// </summary>
+		/// <param name="folder"></param>
+		public void Export(string folder)
+		{
+			// Basispfad bauen
+			string baseFileName = Path.Combine(folder, Name);
+
+			// Hilfsfunktion fürs Exportieren
+			Action<SLPFile, string> exportSlp = (slp, suffix) =>
+			{
+				// Schreiben und speichern
+				slp.writeData();
+				if(!string.IsNullOrEmpty(suffix))
+					((RAMBuffer)slp.DataBuffer).Save(baseFileName + " " + suffix + ".slp");
+				else
+					((RAMBuffer)slp.DataBuffer).Save(baseFileName + ".slp");
+			};
+
+			// Rumpf und Schatten exportieren
+			if(BaseSlp != null)
+				exportSlp(BaseSlp, "");
+			if(ShadowSlp != null)
+				exportSlp(ShadowSlp, "(Schatten)");
+
+			// Segel kulturweise exportieren
+			foreach(var currS in Sails)
+				if(currS.Value.Used)
+					foreach(var currSlp in currS.Value.SailSlps)
+						exportSlp(currSlp.Value, "(" + Sail.SailTypeNames[currS.Key] + ") [" + CivNames[currSlp.Key] + "]");
+		}
+
 		#endregion
 
 		#region Enumeration
@@ -143,6 +178,19 @@ namespace X2AddOnShipTool
 			WE = 3,
 			IN = 4
 		}
+
+		/// <summary>
+		/// Die Namen der einzelnen Kulturen.
+		/// </summary>
+
+		public static readonly ReadOnlyDictionary<Civ, string> CivNames = new ReadOnlyDictionary<Civ, string>(new Dictionary<Civ, string>()
+		{
+			[Civ.ME] = "ME",
+			[Civ.AS] = "AS",
+			[Civ.OR] = "OR",
+			[Civ.WE] = "WE",
+			[Civ.IN] = "IN"
+		});
 
 		#endregion
 	}
