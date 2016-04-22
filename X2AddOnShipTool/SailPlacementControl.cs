@@ -35,6 +35,7 @@ namespace X2AddOnShipTool
 			// Ereignis auslösen
 			_anchorXField.Enabled = _enableCheckBox.Checked;
 			_anchorYField.Enabled = _enableCheckBox.Checked;
+			_invertButton.Enabled = _enableCheckBox.Checked;
 			Changed?.Invoke(this, EventArgs.Empty);
 		}
 
@@ -48,6 +49,12 @@ namespace X2AddOnShipTool
 		{
 			// Ereignis auslösen
 			Changed?.Invoke(this, EventArgs.Empty);
+		}
+
+		private void _invertButton_Click(object sender, EventArgs e)
+		{
+			// Ereignis auslösen
+			InvertRequested?.Invoke(this, EventArgs.Empty);
 		}
 
 		#endregion
@@ -99,6 +106,11 @@ namespace X2AddOnShipTool
 		/// Wird ausgelöst, wenn eines der Steuerelemente einen neuen Wert erhält.
 		/// </summary>
 		public event EventHandler Changed;
+
+		/// <summary>
+		/// Wird ausgelöst, wenn der Invertieren-Button gedrückt wird.
+		/// </summary>
+		public event EventHandler InvertRequested;
 
 		#endregion
 	}

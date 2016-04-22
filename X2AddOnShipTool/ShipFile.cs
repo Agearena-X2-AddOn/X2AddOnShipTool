@@ -37,6 +37,11 @@ namespace X2AddOnShipTool
 		/// </summary>
 		public Dictionary<Sail.SailType, Sail> Sails { get; private set; }
 
+		/// <summary>
+		/// Die 1-Typen der invertierten Segel.
+		/// </summary>
+		public List<Sail.SailType> InvertedSails { get; private set; }
+
 		#endregion
 
 		#region Funktionen
@@ -48,6 +53,7 @@ namespace X2AddOnShipTool
 		{
 			// Variablen erstellen
 			Sails = new Dictionary<Sail.SailType, Sail>();
+			InvertedSails = new List<Sail.SailType>();
 		}
 
 		/// <summary>
@@ -80,6 +86,11 @@ namespace X2AddOnShipTool
 				Sail currSail = new Sail(buffer);
 				Sails.Add(currType, currSail);
 			}
+
+			// Invertierte Segeltypen lesen
+			int invSailCount = buffer.ReadByte();
+			for(int i = 0; i < invSailCount; ++i)
+				InvertedSails.Add((Sail.SailType)buffer.ReadByte());
 		}
 
 		/// <summary>
@@ -125,6 +136,11 @@ namespace X2AddOnShipTool
 				buffer.WriteByte((byte)currSail.Key);
 				currSail.Value.WriteData(buffer);
 			}
+
+			// Invertierte Segel schreiben
+			buffer.WriteByte((byte)InvertedSails.Count);
+			foreach(var invSail in InvertedSails)
+				buffer.WriteByte((byte)invSail);
 
 			// Speichern
 			buffer.Save(filename);

@@ -31,6 +31,7 @@
 			this._enableCheckBox = new System.Windows.Forms.CheckBox();
 			this._anchorXField = new System.Windows.Forms.NumericUpDown();
 			this._anchorYField = new System.Windows.Forms.NumericUpDown();
+			this._invertButton = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this._anchorXField)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this._anchorYField)).BeginInit();
 			this.SuspendLayout();
@@ -86,15 +87,28 @@
 			this._anchorYField.TabIndex = 2;
 			this._anchorYField.ValueChanged += new System.EventHandler(this._anchorYField_ValueChanged);
 			// 
+			// _invertButton
+			// 
+			this._invertButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this._invertButton.Enabled = false;
+			this._invertButton.Location = new System.Drawing.Point(246, 1);
+			this._invertButton.Name = "_invertButton";
+			this._invertButton.Size = new System.Drawing.Size(32, 22);
+			this._invertButton.TabIndex = 3;
+			this._invertButton.Text = "<->";
+			this._invertButton.UseVisualStyleBackColor = true;
+			this._invertButton.Click += new System.EventHandler(this._invertButton_Click);
+			// 
 			// SailPlacementControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this._invertButton);
 			this.Controls.Add(this._anchorYField);
 			this.Controls.Add(this._anchorXField);
 			this.Controls.Add(this._enableCheckBox);
 			this.Name = "SailPlacementControl";
-			this.Size = new System.Drawing.Size(244, 23);
+			this.Size = new System.Drawing.Size(278, 23);
 			((System.ComponentModel.ISupportInitialize)(this._anchorXField)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this._anchorYField)).EndInit();
 			this.ResumeLayout(false);
@@ -107,5 +121,6 @@
 		private System.Windows.Forms.CheckBox _enableCheckBox;
 		private System.Windows.Forms.NumericUpDown _anchorXField;
 		private System.Windows.Forms.NumericUpDown _anchorYField;
+		private System.Windows.Forms.Button _invertButton;
 	}
 }

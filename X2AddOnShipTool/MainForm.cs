@@ -354,6 +354,15 @@ namespace X2AddOnShipTool
 			if(_ship.Sails[secondSailType].Used != sailControl.SailUsed)
 				_ship.Sails[secondSailType].Used = sailControl.SailUsed;
 
+			// Ggf. Typen tauschen
+			if(_ship.InvertedSails.Contains(sailType) || _ship.InvertedSails.Contains(secondSailType))
+			{
+				// Tauschen
+				Sail.SailType temp = sailType;
+				sailType = secondSailType;
+				secondSailType = temp;
+			}
+
 			// Segel-Anker aktualisieren
 			SLPLoader.SLPFile.FrameInformationHeader sailFrameHeader = _ship.Sails[sailType].SailSlps[_currentCiv]._frameInformationHeaders[_sailRenderData[sailType].CurrentFrameId];
 			if(justEnabled)
@@ -375,6 +384,40 @@ namespace X2AddOnShipTool
 		}
 
 		/// <summary>
+		/// Vertauscht die Segel der beiden angegebenen Segeltypen.
+		/// </summary>
+		/// <param name="sailType">Der Segeltyp 1.</param>
+		/// <param name="secondSailType">Der Segeltyp 2.</param>
+		private void InvertSails(Sail.SailType sailType, Sail.SailType secondSailType)
+		{
+			// Hauptsegel ignorieren
+			if(sailType == Sail.SailType.MainGo || sailType == Sail.SailType.MainStop)
+				return;
+
+			// Aktualisieren...
+			_updating = true;
+
+			// Segel-Listenelemente tauschen
+			Sail temp = _ship.Sails[sailType];
+			_ship.Sails[sailType] = _ship.Sails[secondSailType];
+			_ship.Sails[secondSailType] = temp;
+
+			// Segel als invertiert markieren
+			if(_ship.InvertedSails.Contains(sailType))
+				_ship.InvertedSails.Remove(sailType);
+			else
+				_ship.InvertedSails.Add(sailType);
+
+			// Schiffsdaten aktualisieren
+			CreateShipTextures();
+			UpdateSailControls();
+
+			// Neuzeichnen
+			_updating = false;
+			_drawPanel.Invalidate();
+		}
+
+		/// <summary>
 		/// Aktualisiert die Segel-Steuerelemente. Wird aufgerufen bei Änderung der Drehrichtung etc.
 		/// </summary>
 		private void UpdateSailControls()
@@ -384,6 +427,11 @@ namespace X2AddOnShipTool
 			{
 				// Anker
 				Sail.SailType shownSailType = (_sailRenderData[Sail.SailType.Small1].CurrentFrameId < 5 ? Sail.SailType.Small1 : Sail.SailType.Small2);
+				if(_ship.InvertedSails.Contains(Sail.SailType.Small1))
+					if(shownSailType == Sail.SailType.Small1)
+						shownSailType = Sail.SailType.Small2;
+					else
+						shownSailType = Sail.SailType.Small1;
 				SLPLoader.SLPFile.FrameInformationHeader sailFrameHeader = _ship.Sails[shownSailType].SailSlps[_currentCiv]._frameInformationHeaders[_sailRenderData[shownSailType].CurrentFrameId];
 				_smallSailField.AnchorX = sailFrameHeader.AnchorX;
 				_smallSailField.AnchorY = sailFrameHeader.AnchorY;
@@ -392,6 +440,11 @@ namespace X2AddOnShipTool
 			{
 				// Anker
 				Sail.SailType shownSailType = (_sailRenderData[Sail.SailType.Mid1].CurrentFrameId < 5 ? Sail.SailType.Mid1 : Sail.SailType.Mid2);
+				if(_ship.InvertedSails.Contains(Sail.SailType.Mid1))
+					if(shownSailType == Sail.SailType.Mid1)
+						shownSailType = Sail.SailType.Mid2;
+					else
+						shownSailType = Sail.SailType.Mid1;
 				SLPLoader.SLPFile.FrameInformationHeader sailFrameHeader = _ship.Sails[shownSailType].SailSlps[_currentCiv]._frameInformationHeaders[_sailRenderData[shownSailType].CurrentFrameId];
 				_midSailField.AnchorX = sailFrameHeader.AnchorX;
 				_midSailField.AnchorY = sailFrameHeader.AnchorY;
@@ -400,6 +453,11 @@ namespace X2AddOnShipTool
 			{
 				// Anker
 				Sail.SailType shownSailType = (_sailRenderData[Sail.SailType.Large1].CurrentFrameId < 5 ? Sail.SailType.Large1 : Sail.SailType.Large2);
+				if(_ship.InvertedSails.Contains(Sail.SailType.Large1))
+					if(shownSailType == Sail.SailType.Large1)
+						shownSailType = Sail.SailType.Large2;
+					else
+						shownSailType = Sail.SailType.Large1;
 				SLPLoader.SLPFile.FrameInformationHeader sailFrameHeader = _ship.Sails[shownSailType].SailSlps[_currentCiv]._frameInformationHeaders[_sailRenderData[shownSailType].CurrentFrameId];
 				_largeSailField.AnchorX = sailFrameHeader.AnchorX;
 				_largeSailField.AnchorY = sailFrameHeader.AnchorY;
@@ -985,6 +1043,30 @@ namespace X2AddOnShipTool
 				else if(_mainSailFrameField.Value > _mainSailFrameField.Minimum)
 					--_mainSailFrameField.Value;
 			}
+		}
+
+		private void _smallSailField_InvertRequested(object sender, EventArgs e)
+		{
+			// Segel invertieren
+			InvertSails(Sail.SailType.Small1, Sail.SailType.Small2);
+		}
+
+		private void _midSailField_InvertRequested(object sender, EventArgs e)
+		{
+			// Segel invertieren
+			InvertSails(Sail.SailType.Mid1, Sail.SailType.Mid2);
+		}
+
+		private void _largeSailField_InvertRequested(object sender, EventArgs e)
+		{
+			// Segel invertieren
+			InvertSails(Sail.SailType.Large1, Sail.SailType.Large2);
+		}
+
+		private void _mainSailField_InvertRequested(object sender, EventArgs e)
+		{
+			// Segel invertieren
+			InvertSails(Sail.SailType.MainGo, Sail.SailType.MainStop);
 		}
 
 		#endregion

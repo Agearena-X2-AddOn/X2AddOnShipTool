@@ -63,11 +63,11 @@
 			this._mainSailModeGoButton = new System.Windows.Forms.RadioButton();
 			this._mainSailModeStopButton = new System.Windows.Forms.RadioButton();
 			this._mainSailModeLabel = new System.Windows.Forms.Label();
+			this._openExportFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this._mainSailField = new X2AddOnShipTool.SailPlacementControl();
 			this._largeSailField = new X2AddOnShipTool.SailPlacementControl();
 			this._midSailField = new X2AddOnShipTool.SailPlacementControl();
 			this._smallSailField = new X2AddOnShipTool.SailPlacementControl();
-			this._openExportFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this._mainPanel.SuspendLayout();
 			this._shipGroupBox.SuspendLayout();
 			this._menuGroupBox.SuspendLayout();
@@ -86,7 +86,7 @@
 			this._drawPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this._drawPanel.Location = new System.Drawing.Point(0, 64);
 			this._drawPanel.Name = "_drawPanel";
-			this._drawPanel.Size = new System.Drawing.Size(798, 388);
+			this._drawPanel.Size = new System.Drawing.Size(772, 388);
 			this._drawPanel.TabIndex = 0;
 			this._drawPanel.VSync = false;
 			this._drawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this._drawPanel_Paint);
@@ -104,7 +104,7 @@
 			this._mainPanel.Dock = System.Windows.Forms.DockStyle.Top;
 			this._mainPanel.Location = new System.Drawing.Point(0, 0);
 			this._mainPanel.Name = "_mainPanel";
-			this._mainPanel.Size = new System.Drawing.Size(1049, 64);
+			this._mainPanel.Size = new System.Drawing.Size(1054, 64);
 			this._mainPanel.TabIndex = 1;
 			// 
 			// _shipGroupBox
@@ -221,7 +221,7 @@
 			this._bottomPanel.Enabled = false;
 			this._bottomPanel.Location = new System.Drawing.Point(0, 452);
 			this._bottomPanel.Name = "_bottomPanel";
-			this._bottomPanel.Size = new System.Drawing.Size(1049, 60);
+			this._bottomPanel.Size = new System.Drawing.Size(1054, 60);
 			this._bottomPanel.TabIndex = 2;
 			// 
 			// _civGroupBox
@@ -432,15 +432,15 @@
 			this._sailPanel.Controls.Add(this._smallSailField);
 			this._sailPanel.Dock = System.Windows.Forms.DockStyle.Right;
 			this._sailPanel.Enabled = false;
-			this._sailPanel.Location = new System.Drawing.Point(798, 64);
+			this._sailPanel.Location = new System.Drawing.Point(772, 64);
 			this._sailPanel.Name = "_sailPanel";
-			this._sailPanel.Size = new System.Drawing.Size(251, 388);
+			this._sailPanel.Size = new System.Drawing.Size(282, 388);
 			this._sailPanel.TabIndex = 3;
 			// 
 			// _mainSailModeGoButton
 			// 
 			this._mainSailModeGoButton.AutoSize = true;
-			this._mainSailModeGoButton.Location = new System.Drawing.Point(176, 119);
+			this._mainSailModeGoButton.Location = new System.Drawing.Point(175, 119);
 			this._mainSailModeGoButton.Name = "_mainSailModeGoButton";
 			this._mainSailModeGoButton.Size = new System.Drawing.Size(58, 17);
 			this._mainSailModeGoButton.TabIndex = 6;
@@ -452,7 +452,7 @@
 			// 
 			this._mainSailModeStopButton.AutoSize = true;
 			this._mainSailModeStopButton.Checked = true;
-			this._mainSailModeStopButton.Location = new System.Drawing.Point(111, 119);
+			this._mainSailModeStopButton.Location = new System.Drawing.Point(109, 119);
 			this._mainSailModeStopButton.Name = "_mainSailModeStopButton";
 			this._mainSailModeStopButton.Size = new System.Drawing.Size(59, 17);
 			this._mainSailModeStopButton.TabIndex = 5;
@@ -464,73 +464,77 @@
 			// _mainSailModeLabel
 			// 
 			this._mainSailModeLabel.AutoSize = true;
-			this._mainSailModeLabel.Location = new System.Drawing.Point(6, 121);
+			this._mainSailModeLabel.Location = new System.Drawing.Point(5, 121);
 			this._mainSailModeLabel.Name = "_mainSailModeLabel";
 			this._mainSailModeLabel.Size = new System.Drawing.Size(99, 13);
 			this._mainSailModeLabel.TabIndex = 4;
 			this._mainSailModeLabel.Text = "Hauptsegel-Modus:";
+			// 
+			// _openExportFolderDialog
+			// 
+			this._openExportFolderDialog.Description = "Export-Ordner auswählen...";
 			// 
 			// _mainSailField
 			// 
 			this._mainSailField.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this._mainSailField.AnchorX = 0;
 			this._mainSailField.AnchorY = 0;
-			this._mainSailField.Location = new System.Drawing.Point(4, 90);
+			this._mainSailField.Location = new System.Drawing.Point(3, 90);
 			this._mainSailField.Name = "_mainSailField";
 			this._mainSailField.SailName = "Hauptsegel";
 			this._mainSailField.SailUsed = false;
-			this._mainSailField.Size = new System.Drawing.Size(244, 23);
+			this._mainSailField.Size = new System.Drawing.Size(276, 23);
 			this._mainSailField.TabIndex = 3;
 			this._mainSailField.Changed += new System.EventHandler(this._mainSailField_Changed);
+			this._mainSailField.InvertRequested += new System.EventHandler(this._mainSailField_InvertRequested);
 			// 
 			// _largeSailField
 			// 
 			this._largeSailField.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this._largeSailField.AnchorX = 0;
 			this._largeSailField.AnchorY = 0;
-			this._largeSailField.Location = new System.Drawing.Point(4, 61);
+			this._largeSailField.Location = new System.Drawing.Point(3, 61);
 			this._largeSailField.Name = "_largeSailField";
 			this._largeSailField.SailName = "Großes Nebensegel";
 			this._largeSailField.SailUsed = false;
-			this._largeSailField.Size = new System.Drawing.Size(244, 23);
+			this._largeSailField.Size = new System.Drawing.Size(276, 23);
 			this._largeSailField.TabIndex = 2;
 			this._largeSailField.Changed += new System.EventHandler(this._largeSailField_Changed);
+			this._largeSailField.InvertRequested += new System.EventHandler(this._largeSailField_InvertRequested);
 			// 
 			// _midSailField
 			// 
 			this._midSailField.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this._midSailField.AnchorX = 0;
 			this._midSailField.AnchorY = 0;
-			this._midSailField.Location = new System.Drawing.Point(4, 32);
+			this._midSailField.Location = new System.Drawing.Point(3, 32);
 			this._midSailField.Name = "_midSailField";
 			this._midSailField.SailName = "Mittleres Nebensegel";
 			this._midSailField.SailUsed = false;
-			this._midSailField.Size = new System.Drawing.Size(244, 23);
+			this._midSailField.Size = new System.Drawing.Size(276, 23);
 			this._midSailField.TabIndex = 1;
 			this._midSailField.Changed += new System.EventHandler(this._midSailField_Changed);
+			this._midSailField.InvertRequested += new System.EventHandler(this._midSailField_InvertRequested);
 			// 
 			// _smallSailField
 			// 
 			this._smallSailField.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this._smallSailField.AnchorX = 0;
 			this._smallSailField.AnchorY = 0;
-			this._smallSailField.Location = new System.Drawing.Point(4, 3);
+			this._smallSailField.Location = new System.Drawing.Point(3, 3);
 			this._smallSailField.Name = "_smallSailField";
 			this._smallSailField.SailName = "Kleines Nebensegel";
 			this._smallSailField.SailUsed = false;
-			this._smallSailField.Size = new System.Drawing.Size(244, 23);
+			this._smallSailField.Size = new System.Drawing.Size(276, 23);
 			this._smallSailField.TabIndex = 0;
 			this._smallSailField.Changed += new System.EventHandler(this._smallSailField_Changed);
-			// 
-			// _openExportFolderDialog
-			// 
-			this._openExportFolderDialog.Description = "Export-Ordner auswählen...";
+			this._smallSailField.InvertRequested += new System.EventHandler(this._smallSailField_InvertRequested);
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1049, 512);
+			this.ClientSize = new System.Drawing.Size(1054, 512);
 			this.Controls.Add(this._drawPanel);
 			this.Controls.Add(this._sailPanel);
 			this.Controls.Add(this._bottomPanel);
