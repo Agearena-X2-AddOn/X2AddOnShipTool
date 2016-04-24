@@ -412,6 +412,10 @@ namespace X2AddOnShipTool
 			CreateShipTextures();
 			UpdateSailControls();
 
+			// Richtungsdaten neu anwenden
+			_rotationField_ValueChanged(this, EventArgs.Empty);
+			_mainSailFrameField_ValueChanged(this, EventArgs.Empty);
+
 			// Neuzeichnen
 			_updating = false;
 			_drawPanel.Invalidate();
@@ -936,8 +940,8 @@ namespace X2AddOnShipTool
 			_updating = true;
 			_rotationField_ValueChanged(this, EventArgs.Empty);
 			_mainSailFrameField_ValueChanged(this, EventArgs.Empty);
-			_updating = false;
 			UpdateSailControls();
+			_updating = false;
 
 			// Neuzeichnen
 			_drawPanel.Invalidate();
