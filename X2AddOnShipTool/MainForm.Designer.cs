@@ -63,11 +63,11 @@
 			this._mainSailModeGoButton = new System.Windows.Forms.RadioButton();
 			this._mainSailModeStopButton = new System.Windows.Forms.RadioButton();
 			this._mainSailModeLabel = new System.Windows.Forms.Label();
-			this._openExportFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this._mainSailField = new X2AddOnShipTool.SailPlacementControl();
 			this._largeSailField = new X2AddOnShipTool.SailPlacementControl();
 			this._midSailField = new X2AddOnShipTool.SailPlacementControl();
 			this._smallSailField = new X2AddOnShipTool.SailPlacementControl();
+			this._openExportFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this._mainPanel.SuspendLayout();
 			this._shipGroupBox.SuspendLayout();
 			this._menuGroupBox.SuspendLayout();
@@ -319,7 +319,7 @@
 			// 
 			this._mainSailFrameField.Location = new System.Drawing.Point(451, 19);
 			this._mainSailFrameField.Maximum = new decimal(new int[] {
-            49,
+            89,
             0,
             0,
             0});
@@ -470,10 +470,6 @@
 			this._mainSailModeLabel.TabIndex = 4;
 			this._mainSailModeLabel.Text = "Hauptsegel-Modus:";
 			// 
-			// _openExportFolderDialog
-			// 
-			this._openExportFolderDialog.Description = "Export-Ordner auswählen...";
-			// 
 			// _mainSailField
 			// 
 			this._mainSailField.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -529,6 +525,10 @@
 			this._smallSailField.TabIndex = 0;
 			this._smallSailField.Changed += new System.EventHandler(this._smallSailField_Changed);
 			this._smallSailField.InvertRequested += new System.EventHandler(this._smallSailField_InvertRequested);
+			// 
+			// _openExportFolderDialog
+			// 
+			this._openExportFolderDialog.Description = "Export-Ordner auswählen...";
 			// 
 			// MainForm
 			// 

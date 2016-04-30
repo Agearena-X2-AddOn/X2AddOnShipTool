@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using OpenTK.Graphics.OpenGL;
 using DRSLibrary;
+using System.IO;
 
 namespace X2AddOnShipTool
 {
@@ -365,6 +366,7 @@ namespace X2AddOnShipTool
 
 			// Segel-Anker aktualisieren
 			SLPLoader.SLPFile.FrameInformationHeader sailFrameHeader = _ship.Sails[sailType].SailSlps[_currentCiv]._frameInformationHeaders[_sailRenderData[sailType].CurrentFrameId];
+			SLPLoader.SLPFile.FrameInformationHeader secondFrameHeader = _ship.Sails[secondSailType].SailSlps[_currentCiv]._frameInformationHeaders[_sailRenderData[secondSailType].CurrentFrameId];
 			if(justEnabled)
 			{
 				// Steuerelemente aktualisieren
@@ -376,6 +378,14 @@ namespace X2AddOnShipTool
 				// SLP-Daten aktualisieren
 				sailFrameHeader.AnchorX = sailControl.AnchorX;
 				sailFrameHeader.AnchorY = sailControl.AnchorY;
+
+				// Hauptsegel-Anker nicht durcheinanderwerfen
+				if(sailType != Sail.SailType.MainGo && sailType != Sail.SailType.MainStop)
+				{
+					// Anker des zweiten Segelsa aktualisieren
+					secondFrameHeader.AnchorX = sailControl.AnchorX;
+					secondFrameHeader.AnchorY = sailControl.AnchorY;
+				}
 			}
 
 			// Neuzeichnen
@@ -751,6 +761,7 @@ namespace X2AddOnShipTool
 			// Dialog zeigen
 			if(_openShipDialog.ShowDialog() != DialogResult.OK)
 				return;
+			_openExportFolderDialog.SelectedPath = Path.GetDirectoryName(_openShipDialog.FileName);
 
 			// Schiff laden
 			_ship = new ShipFile(_openShipDialog.FileName);
@@ -796,15 +807,18 @@ namespace X2AddOnShipTool
 
 		private void _exportButton_Click(object sender, EventArgs e)
 		{
-			// Ordner auswählen lassen
-			if(_openExportFolderDialog.ShowDialog() == DialogResult.OK)
+			// Ordner und ID auswählen lassen
+			SlpIdForm slpIdForm = new SlpIdForm();
+			if(_openExportFolderDialog.ShowDialog() == DialogResult.OK && slpIdForm.ShowDialog() == DialogResult.OK)
 			{
-				// Exportieren mit schönem Cursor
+				// Schöner Cursor
 				Cursor.Current = Cursors.WaitCursor;
-				_ship.Export(_openExportFolderDialog.SelectedPath);
-				Cursor.Current = Cursors.Default;
+
+				// Exportieren
+				_ship.Export(_openExportFolderDialog.SelectedPath, slpIdForm.SlpId);
 
 				// Erfolgsnachricht
+				Cursor.Current = Cursors.Default;
 				MessageBox.Show("Exportieren nach \"" + _openExportFolderDialog.SelectedPath + "\" erfolgreich!", "Exportieren", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 		}
@@ -913,7 +927,9 @@ namespace X2AddOnShipTool
 			_mainSailMode = _mainSailModeGoButton.Checked;
 
 			// Feld aktualisieren
+			_updating = true;
 			UpdateSailControls();
+			_updating = false;
 
 			// Neuzeichnen
 			_drawPanel.Invalidate();
@@ -968,7 +984,7 @@ namespace X2AddOnShipTool
 			_updating = true;
 
 			// Hauptsegel-Feld aktualisieren
-			_mainSailFrameField.Value = (val / 2) * 10;
+			_mainSailFrameField.Value = val * 10;
 
 			// Steuerelemente aktualisieren
 			UpdateSailControls();
@@ -993,8 +1009,8 @@ namespace X2AddOnShipTool
 			_updating = true;
 
 			// Rotationsfeld aktualisieren
-			if(_rotationField.Value < 2 * (val / 10) || _rotationField.Value > 2 * (val / 10) + 1)
-				_rotationField.Value = 2 * (val / 10);
+			if(_rotationField.Value != (val / 10))
+				_rotationField.Value = val / 10;
 
 			// Steuerelemente aktualisieren
 			UpdateSailControls();

@@ -117,41 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="pal50500" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\50500.pal;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="RenderFontConsolas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RenderFontConsolas.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MainGo_AS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\maingo_as.slp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="MainGo_IN" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\maingo_in.slp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="MainGo_ME" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\maingo_me.slp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="MainGo_OR" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\maingo_or.slp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="MainGo_WE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\maingo_we.slp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="MainStop_AS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\mainstop_as.slp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="MainStop_IN" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\mainstop_in.slp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="MainStop_ME" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\mainstop_me.slp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="MainStop_OR" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\mainstop_or.slp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="MainStop_WE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\mainstop_we.slp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
 </root>

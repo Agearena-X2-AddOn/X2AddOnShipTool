@@ -68,9 +68,28 @@ namespace X2AddOnShipTool
 			: this()
 		{
 			// Passende Segel in Liste einfügen
-			foreach(var currSail in SAIL_RESOURCE_IDs)
-				if(currSail.Item1 == type)
-					SailSlps.Add(currSail.Item2, new SLPFile(new RAMBuffer(graphicsDrs.GetResourceData(currSail.Item3))));
+			if(type == SailType.MainGo)
+			{
+				// Hauptsegel Fahren
+				SailSlps.Add(ShipFile.Civ.AS, new SLPFile(new RAMBuffer(Properties.Resources.MainGo_AS)));
+				SailSlps.Add(ShipFile.Civ.IN, new SLPFile(new RAMBuffer(Properties.Resources.MainGo_IN)));
+				SailSlps.Add(ShipFile.Civ.ME, new SLPFile(new RAMBuffer(Properties.Resources.MainGo_ME)));
+				SailSlps.Add(ShipFile.Civ.OR, new SLPFile(new RAMBuffer(Properties.Resources.MainGo_OR)));
+				SailSlps.Add(ShipFile.Civ.WE, new SLPFile(new RAMBuffer(Properties.Resources.MainGo_WE)));
+			}
+			else if(type == SailType.MainStop)
+			{
+				// Hauptsegel Stehen
+				SailSlps.Add(ShipFile.Civ.AS, new SLPFile(new RAMBuffer(Properties.Resources.MainStop_AS)));
+				SailSlps.Add(ShipFile.Civ.IN, new SLPFile(new RAMBuffer(Properties.Resources.MainStop_IN)));
+				SailSlps.Add(ShipFile.Civ.ME, new SLPFile(new RAMBuffer(Properties.Resources.MainStop_ME)));
+				SailSlps.Add(ShipFile.Civ.OR, new SLPFile(new RAMBuffer(Properties.Resources.MainStop_OR)));
+				SailSlps.Add(ShipFile.Civ.WE, new SLPFile(new RAMBuffer(Properties.Resources.MainStop_WE)));
+			}
+			else
+				foreach(var currSail in SAIL_RESOURCE_IDs)
+					if(currSail.Item1 == type)
+						SailSlps.Add(currSail.Item2, new SLPFile(new RAMBuffer(graphicsDrs.GetResourceData(currSail.Item3))));
 		}
 
 		/// <summary>
@@ -137,11 +156,11 @@ namespace X2AddOnShipTool
 		/// </summary>
 		private Tuple<SailType, ShipFile.Civ, ushort>[] SAIL_RESOURCE_IDs =
 		{
-			new Tuple<SailType, ShipFile.Civ, ushort>(SailType.MainGo, ShipFile.Civ.ME, 4301),
+			/*new Tuple<SailType, ShipFile.Civ, ushort>(SailType.MainGo, ShipFile.Civ.ME, 4301),
 			new Tuple<SailType, ShipFile.Civ, ushort>(SailType.MainGo, ShipFile.Civ.AS, 4302),
 			new Tuple<SailType, ShipFile.Civ, ushort>(SailType.MainGo, ShipFile.Civ.OR, 4303),
 			new Tuple<SailType, ShipFile.Civ, ushort>(SailType.MainGo, ShipFile.Civ.WE, 4304),
-			new Tuple<SailType, ShipFile.Civ, ushort>(SailType.MainGo, ShipFile.Civ.IN, 5093),
+			new Tuple<SailType, ShipFile.Civ, ushort>(SailType.MainGo, ShipFile.Civ.IN, 5093),*/
 
 			new Tuple<SailType, ShipFile.Civ, ushort>(SailType.Small1, ShipFile.Civ.ME, 4305),
 			new Tuple<SailType, ShipFile.Civ, ushort>(SailType.Small1, ShipFile.Civ.AS, 4306),
@@ -161,11 +180,11 @@ namespace X2AddOnShipTool
 			new Tuple<SailType, ShipFile.Civ, ushort>(SailType.Large1, ShipFile.Civ.WE, 4312),
 			new Tuple<SailType, ShipFile.Civ, ushort>(SailType.Large1, ShipFile.Civ.IN, 5095),
 
-			new Tuple<SailType, ShipFile.Civ, ushort>(SailType.MainStop, ShipFile.Civ.ME, 4598),
+			/*new Tuple<SailType, ShipFile.Civ, ushort>(SailType.MainStop, ShipFile.Civ.ME, 4598),
 			new Tuple<SailType, ShipFile.Civ, ushort>(SailType.MainStop, ShipFile.Civ.AS, 4599),
 			new Tuple<SailType, ShipFile.Civ, ushort>(SailType.MainStop, ShipFile.Civ.OR, 4600),
 			new Tuple<SailType, ShipFile.Civ, ushort>(SailType.MainStop, ShipFile.Civ.WE, 4601),
-			new Tuple<SailType, ShipFile.Civ, ushort>(SailType.MainStop, ShipFile.Civ.IN, 5092),
+			new Tuple<SailType, ShipFile.Civ, ushort>(SailType.MainStop, ShipFile.Civ.IN, 5092),*/
 
 			new Tuple<SailType, ShipFile.Civ, ushort>(SailType.Large2, ShipFile.Civ.ME, 4321),
 			new Tuple<SailType, ShipFile.Civ, ushort>(SailType.Large2, ShipFile.Civ.AS, 4322),

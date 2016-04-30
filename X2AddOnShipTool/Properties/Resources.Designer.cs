@@ -63,6 +63,106 @@ namespace X2AddOnShipTool.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
         /// </summary>
+        internal static byte[] MainGo_AS {
+            get {
+                object obj = ResourceManager.GetObject("MainGo_AS", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] MainGo_IN {
+            get {
+                object obj = ResourceManager.GetObject("MainGo_IN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] MainGo_ME {
+            get {
+                object obj = ResourceManager.GetObject("MainGo_ME", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] MainGo_OR {
+            get {
+                object obj = ResourceManager.GetObject("MainGo_OR", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] MainGo_WE {
+            get {
+                object obj = ResourceManager.GetObject("MainGo_WE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] MainStop_AS {
+            get {
+                object obj = ResourceManager.GetObject("MainStop_AS", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] MainStop_IN {
+            get {
+                object obj = ResourceManager.GetObject("MainStop_IN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] MainStop_ME {
+            get {
+                object obj = ResourceManager.GetObject("MainStop_ME", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] MainStop_OR {
+            get {
+                object obj = ResourceManager.GetObject("MainStop_OR", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] MainStop_WE {
+            get {
+                object obj = ResourceManager.GetObject("MainStop_WE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
         internal static byte[] pal50500 {
             get {
                 object obj = ResourceManager.GetObject("pal50500", resourceCulture);
