@@ -815,7 +815,7 @@ namespace X2AddOnShipTool
 				Cursor.Current = Cursors.WaitCursor;
 
 				// Exportieren
-				_ship.Export(_openExportFolderDialog.SelectedPath, slpIdForm.SlpId);
+				_ship.Export(_openExportFolderDialog.SelectedPath, slpIdForm.SlpId, slpIdForm.Broadside);
 
 				// Erfolgsnachricht
 				Cursor.Current = Cursors.Default;

@@ -30,6 +30,7 @@
 		{
 			this._idTextBox = new System.Windows.Forms.TextBox();
 			this._okButton = new System.Windows.Forms.Button();
+			this._broadsideCheckBox = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// _idTextBox
@@ -49,11 +50,22 @@
 			this._okButton.UseVisualStyleBackColor = true;
 			this._okButton.Click += new System.EventHandler(this._okButton_Click);
 			// 
+			// _broadsideCheckBox
+			// 
+			this._broadsideCheckBox.AutoSize = true;
+			this._broadsideCheckBox.Location = new System.Drawing.Point(12, 38);
+			this._broadsideCheckBox.Name = "_broadsideCheckBox";
+			this._broadsideCheckBox.Size = new System.Drawing.Size(156, 17);
+			this._broadsideCheckBox.TabIndex = 2;
+			this._broadsideCheckBox.Text = "Breitseiten-SLPs generieren";
+			this._broadsideCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// SlpIdForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(198, 43);
+			this.ClientSize = new System.Drawing.Size(198, 65);
+			this.Controls.Add(this._broadsideCheckBox);
 			this.Controls.Add(this._okButton);
 			this.Controls.Add(this._idTextBox);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -72,5 +84,6 @@
 
 		private System.Windows.Forms.TextBox _idTextBox;
 		private System.Windows.Forms.Button _okButton;
+		private System.Windows.Forms.CheckBox _broadsideCheckBox;
 	}
 }

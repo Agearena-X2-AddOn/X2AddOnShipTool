@@ -306,7 +306,8 @@ namespace X2AddOnShipTool
 		/// </summary>
 		/// <param name="folder">Der Zielordner.</param>
 		/// <param name="baseId">Die erste freie ID, zu der exportiert werden soll.</param>
-		public void Export(string folder, int baseId)
+		/// <param name="broadside">Gibt an, ob die Grafiken zusätzlich im Breitseitenmodus exportiert werden sollen.</param>
+		public void Export(string folder, int baseId, bool broadside)
 		{
 			// Die aktuell freie ID
 			int currId = baseId;
@@ -323,9 +324,88 @@ namespace X2AddOnShipTool
 				// Exportstruktur anlegen
 				DRSLibrary.DRSFile.ExternalFile extFile = new DRSLibrary.DRSFile.ExternalFile();
 
+				// Breitseitenmodus?
+				SLPFile slpE = slp;
+				if(broadside)
+				{
+					// Suffix erweitern
+					suffix += " [B]";
+
+					// Neue SLP mit umkopierten Frames erzeugen
+					slp.writeData();
+					RAMBuffer tmpBuffer = (RAMBuffer)slp.DataBuffer;
+					tmpBuffer.Position = 0;
+					slpE = new SLPFile(tmpBuffer);
+					slpE._frameInformationHeaders.Clear();
+					slpE._frameInformationData.Clear();
+
+					// Drehrichtungen vorne bis links (-> links bis hinten)
+					for(int i = 4; i <= 8; ++i)
+					{
+						// Alle Frames der Drehrichtung kopieren
+						for(int f = i * (int)(slp.FrameCount / 9); f < (i + 1) * (int)(slp.FrameCount / 9); ++f)
+						{
+							// Header kopieren
+							SLPFile.FrameInformationHeader fHead = new SLPFile.FrameInformationHeader();
+							fHead.AnchorX = slp._frameInformationHeaders[f].AnchorX;
+							fHead.AnchorY = slp._frameInformationHeaders[f].AnchorY;
+							fHead.Width = slp._frameInformationHeaders[f].Width;
+							fHead.Height = slp._frameInformationHeaders[f].Height;
+							fHead.Properties = slp._frameInformationHeaders[f].Properties;
+							slpE._frameInformationHeaders.Add(fHead);
+
+							// Daten kopieren
+							SLPFile.FrameInformationData fData = new SLPFile.FrameInformationData();
+							fData.BinaryCommandTable = new List<SLPFile.BinaryCommand>(slp._frameInformationData[f].BinaryCommandTable);
+							fData.BinaryRowEdge = slp._frameInformationData[f].BinaryRowEdge;
+							fData.CommandTable = slp._frameInformationData[f].CommandTable;
+							fData.CommandTableOffsets = new uint[slp._frameInformationData[f].CommandTableOffsets.Length];
+							fData.RowEdge = slp._frameInformationData[f].RowEdge;
+							slpE._frameInformationData.Add(fData);
+						}
+					}
+
+					// Drehrichtungen links links hinten bis hinten (-> hinten hinten rechts bis rechts)
+					for(int i = 7; i >= 4; --i)
+					{
+						// Alle Frames der Drehrichtung spiegeln und kopieren
+						for(int f = i * (int)(slp.FrameCount / 9); f < (i + 1) * (int)(slp.FrameCount / 9); ++f)
+						{
+							// Header kopieren
+							SLPFile.FrameInformationHeader fHead = new SLPFile.FrameInformationHeader();
+							fHead.AnchorX = (int)slp._frameInformationHeaders[f].Width - slp._frameInformationHeaders[f].AnchorX;
+							fHead.AnchorY = slp._frameInformationHeaders[f].AnchorY;
+							fHead.Width = slp._frameInformationHeaders[f].Width;
+							fHead.Height = slp._frameInformationHeaders[f].Height;
+							fHead.Properties = slp._frameInformationHeaders[f].Properties;
+							slpE._frameInformationHeaders.Add(fHead);
+
+							// Daten spiegeln und kopieren
+							SLPFile.FrameInformationData fData = new SLPFile.FrameInformationData();
+							fData.BinaryCommandTable = new List<SLPFile.BinaryCommand>();
+							fData.BinaryRowEdge = new SLPFile.BinaryRowedge[slp._frameInformationData[f].BinaryRowEdge.Length];
+							for(int bre = 0; bre < fData.BinaryRowEdge.Length; ++bre)
+								fData.BinaryRowEdge[bre] = new SLPFile.BinaryRowedge(slp._frameInformationData[f].BinaryRowEdge[bre]._right, slp._frameInformationData[f].BinaryRowEdge[bre]._left);
+							fData.RowEdge = new ushort[fHead.Height, 2];
+							for(int re = 0; re < fHead.Height; ++re)
+							{
+								fData.RowEdge[re, 0] = slp._frameInformationData[f].RowEdge[re, 1];
+								fData.RowEdge[re, 1] = slp._frameInformationData[f].RowEdge[re, 0];
+							}
+							fData.CommandTable = new int[fHead.Height, fHead.Width];
+							for(int h = 0; h < fHead.Height; ++h)
+								for(int w = 0; w < fHead.Width; ++w)
+									fData.CommandTable[h, fHead.Width - w - 1] = slp._frameInformationData[f].CommandTable[h, w];
+							fData.CommandTableOffsets = new uint[slp._frameInformationData[f].CommandTableOffsets.Length];
+							slpE.CreateBinaryCommandTable(fData, (int)fHead.Width, (int)fHead.Height, slpE._settings);
+							slpE._frameInformationData.Add(fData);
+						}
+					}
+				}
+
 				// SLP-Daten lesen und zuweisen
-				slp.writeData();
-				RAMBuffer slpBuffer = (RAMBuffer)slp.DataBuffer;
+				slpE.writeData();
+				RAMBuffer slpBuffer = (RAMBuffer)slpE.DataBuffer;
 				slpBuffer.Position = 0;
 				extFile.Data = slpBuffer.ReadByteArray(slpBuffer.Length);
 
@@ -383,7 +463,11 @@ namespace X2AddOnShipTool
 			exportCivSails(Civ.WE);
 
 			// XML-Code speichern
-			File.WriteAllText(Path.Combine(folder, "projectdata.xml"), xmlCode);
+			File.WriteAllText(Path.Combine(folder, "projectdata" + (broadside ? "_b" : "") + ".xml"), xmlCode);
+
+			// Ggf. noch die Nicht-Breitseiten-Frames exportieren
+			if(broadside)
+				Export(folder, currId, false);
 		}
 
 		#endregion

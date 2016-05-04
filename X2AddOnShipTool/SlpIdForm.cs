@@ -40,6 +40,7 @@ namespace X2AddOnShipTool
 
 			// Fertig
 			SlpId = val;
+			Broadside = _broadsideCheckBox.Checked;
 			DialogResult = DialogResult.OK;
 			Close();
 		}
@@ -48,5 +49,10 @@ namespace X2AddOnShipTool
 		/// Die ausgewählte SLP-ID.
 		/// </summary>
 		public int SlpId { get; private set; }
+		
+		/// <summary>
+		/// Der gewählte Breitseitenmodus.
+		/// </summary>
+		public bool Broadside { get; private set; }
 	}
 }
