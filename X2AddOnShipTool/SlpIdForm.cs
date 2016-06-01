@@ -41,6 +41,17 @@ namespace X2AddOnShipTool
 			// Fertig
 			SlpId = val;
 			Broadside = _broadsideCheckBox.Checked;
+			EnabledCivSets = new List<ShipFile.Civ>();
+			if(_civSetASCheckBox.Checked)
+				EnabledCivSets.Add(ShipFile.Civ.AS);
+			if(_civSetINCheckBox.Checked)
+				EnabledCivSets.Add(ShipFile.Civ.IN);
+			if(_civSetMECheckBox.Checked)
+				EnabledCivSets.Add(ShipFile.Civ.ME);
+			if(_civSetORCheckBox.Checked)
+				EnabledCivSets.Add(ShipFile.Civ.OR);
+			if(_civSetWECheckBox.Checked)
+				EnabledCivSets.Add(ShipFile.Civ.WE);
 			DialogResult = DialogResult.OK;
 			Close();
 		}
@@ -49,10 +60,15 @@ namespace X2AddOnShipTool
 		/// Die ausgewählte SLP-ID.
 		/// </summary>
 		public int SlpId { get; private set; }
-		
+
 		/// <summary>
 		/// Der gewählte Breitseitenmodus.
 		/// </summary>
 		public bool Broadside { get; private set; }
+
+		/// <summary>
+		/// Die aktivierten Grafiksets.
+		/// </summary>
+		internal List<ShipFile.Civ> EnabledCivSets { get; private set; }
 	}
 }

@@ -307,7 +307,8 @@ namespace X2AddOnShipTool
 		/// <param name="folder">Der Zielordner.</param>
 		/// <param name="baseId">Die erste freie ID, zu der exportiert werden soll.</param>
 		/// <param name="broadside">Gibt an, ob die Grafiken zusätzlich im Breitseitenmodus exportiert werden sollen.</param>
-		public void Export(string folder, int baseId, bool broadside)
+		/// <param name="enabledCivSets">Eine Liste mit den zu exportierenden Kultur-Grafiksets.</param>
+		public void Export(string folder, int baseId, bool broadside, List<Civ> enabledCivSets)
 		{
 			// Die aktuell freie ID
 			int currId = baseId;
@@ -456,18 +457,15 @@ namespace X2AddOnShipTool
 			};
 
 			// Segel kulturweise exportieren
-			exportCivSails(Civ.AS);
-			exportCivSails(Civ.IN);
-			exportCivSails(Civ.ME);
-			exportCivSails(Civ.OR);
-			exportCivSails(Civ.WE);
+			foreach(Civ civSet in enabledCivSets)
+				exportCivSails(civSet);
 
 			// XML-Code speichern
 			File.WriteAllText(Path.Combine(folder, "projectdata" + (broadside ? "_b" : "") + ".xml"), xmlCode);
 
 			// Ggf. noch die Nicht-Breitseiten-Frames exportieren
 			if(broadside)
-				Export(folder, currId, false);
+				Export(folder, currId, false, enabledCivSets);
 		}
 
 		#endregion

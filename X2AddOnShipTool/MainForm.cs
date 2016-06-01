@@ -495,12 +495,6 @@ namespace X2AddOnShipTool
 			// OpenGL und das Zeichenpanel initialisieren
 			if(!DesignMode)
 				InitDrawPanel();
-
-			// Graphics-DRS laden
-			if(_openGraphicsDrsDialog.ShowDialog() != DialogResult.OK)
-				Close();
-			_graphicsDrs = new DRSFile(_openGraphicsDrsDialog.FileName);
-			BringToFront();
 		}
 
 		private void _drawPanel_Paint(object sender, PaintEventArgs e)
@@ -711,6 +705,11 @@ namespace X2AddOnShipTool
 			if(_ship != null && MessageBox.Show("Alle nicht gespeicherten Änderungen verwerfen?", "Neues Schiff", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
 				return;
 
+			// Graphics-DRS laden
+			if(_openGraphicsDrsDialog.ShowDialog() != DialogResult.OK)
+				return;
+			_graphicsDrs = new DRSFile(_openGraphicsDrsDialog.FileName);
+
 			// Schiff erstellen
 			_ship = new ShipFile();
 
@@ -815,7 +814,7 @@ namespace X2AddOnShipTool
 				Cursor.Current = Cursors.WaitCursor;
 
 				// Exportieren
-				_ship.Export(_openExportFolderDialog.SelectedPath, slpIdForm.SlpId, slpIdForm.Broadside);
+				_ship.Export(_openExportFolderDialog.SelectedPath, slpIdForm.SlpId, slpIdForm.Broadside, slpIdForm.EnabledCivSets);
 
 				// Erfolgsnachricht
 				Cursor.Current = Cursors.Default;
